@@ -1,108 +1,111 @@
----
-id: set-up-your-environment
-title: Set Up Your Environment
-hide_table_of_contents: true
----
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import constants from '@site/core/TabsConstants';
+import 'package:flutter/material.dart';
 
-import GuideLinuxAndroid from './\_getting-started-linux-android.md';
-import GuideMacOSAndroid from './\_getting-started-macos-android.md';
-import GuideWindowsAndroid from './\_getting-started-windows-android.md';
-import GuideMacOSIOS from './\_getting-started-macos-ios.md';
+void main() {
+  runApp(const AmarApp());
+}
 
-In this guide, you'll learn how to set up your environment, so that you can run your project with Android Studio and Xcode. This will allow you to develop with Android emulators and iOS simulators, build your app locally, and more.
+class AmarApp extends StatelessWidget {
+  const AmarApp({super.key});
 
-:::info
-This guide requires Android Studio or Xcode. If you already have one of these programs installed, you should be able to get up and running within a few minutes. If they are not installed, you should expect to spend about an hour installing and configuring them.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'أمر',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: const HomePage(),
+    );
+  }
+}
 
-<details>
-<summary>Is setting up my environment required?</summary>
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
-Setting up your environment is not required if you're using a [Framework](/architecture/glossary#react-native-framework). With a React Native Framework, you don't need to set up Android Studio or Xcode as it will take care of building the native app for you
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('أمر'),
+        centerTitle: true,
+        backgroundColor: Colors.orange,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'ونجيك نطامر 🚚',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
 
-If you have constraints that prevent you from using a Framework, or you'd like to write your own Framework, then setting up your local environment is a requirement. After your environment is set up, learn how to [get started without a framework](getting-started-without-a-framework).
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.orange.shade100,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.delivery_dining, size: 40),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'اطلب أي شيء واحنا نوصله لك بسرعة 🚀',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
-</details>
-:::
+            const SizedBox(height: 20),
 
-#### Development OS
+            const Text(
+              'الأقسام',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
 
-<Tabs groupId="os" queryString defaultValue={constants.defaultOs} values={constants.oses} className="pill-tabs">
-<TabItem value="macos">
+            const SizedBox(height: 10),
 
-#### Target OS
+            Expanded(
+              child: ListView(
+                children: const [
+                  DeliveryCard(title: 'مطاعم'),
+                  DeliveryCard(title: 'بقالة'),
+                  DeliveryCard(title: 'صيدلية'),
+                  DeliveryCard(title: 'طلبات خاصة'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-<Tabs groupId="platform" queryString defaultValue={constants.defaultPlatform} values={constants.platforms} className="pill-tabs">
-<TabItem value="android">
+class DeliveryCard extends StatelessWidget {
+  final String title;
 
-[//]: # 'macOS, Android'
+  const DeliveryCard({super.key, required this.title});
 
-<GuideMacOSAndroid/>
-
-</TabItem>
-<TabItem value="ios">
-
-[//]: # 'macOS, iOS'
-
-<GuideMacOSIOS/>
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-<TabItem value="windows">
-
-#### Target OS
-
-<Tabs groupId="platform" queryString defaultValue={constants.defaultPlatform} values={constants.platforms} className="pill-tabs">
-<TabItem value="android">
-
-[//]: # 'Windows, Android'
-
-<GuideWindowsAndroid/>
-
-</TabItem>
-<TabItem value="ios">
-
-[//]: # 'Windows, iOS'
-
-## Unsupported
-
-:::info
-A Mac is required to build projects with native code for iOS. You can use [Expo Go](https://expo.dev/go) from [Expo](environment-setup#start-a-new-react-native-project-with-expo) to develop your app on your iOS device.
-:::
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-<TabItem value="linux">
-
-#### Target OS
-
-<Tabs groupId="platform" queryString defaultValue={constants.defaultPlatform} values={constants.platforms} className="pill-tabs">
-<TabItem value="android">
-
-[//]: # 'Linux, Android'
-
-<GuideLinuxAndroid/>
-
-</TabItem>
-<TabItem value="ios">
-
-[//]: # 'Linux, iOS'
-
-## Unsupported
-
-:::info
-A Mac is required to build projects with native code for iOS. You can use [Expo Go](https://expo.dev/go) from [Expo](environment-setup#start-a-new-react-native-project-with-expo) to develop your app on your iOS device.
-:::
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-</Tabs>
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.fastfood),
+        title: Text(title),
+        trailing: const Icon(Icons.arrow_forward_ios),
+        onTap: () {},
+      ),
+    );
+  }
+}
